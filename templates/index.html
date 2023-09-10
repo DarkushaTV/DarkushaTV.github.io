@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Голосовой помощник</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .listen-button {
+            font-size: 24px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+        }
+
+            .listen-button:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <h1>Голосовой помощник</h1>
+    <p>Нажмите кнопку, чтобы начать слушать:</p>
+    {% if listening %}
+    <p>Слушаю...</p>
+    {% endif %}
+    <div class="button-container">
+        <form method="POST" action="/start-listening">
+            <button class="listen-button" type="submit">Говорить</button>
+        </form>
+    </div>
+</body>
+</html>
