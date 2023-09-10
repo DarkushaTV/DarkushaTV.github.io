@@ -13,14 +13,25 @@
     <script src="https://cdn.jsdelivr.net/npm/openai/dist/openai.min.js"></script>
     
     <script>
+        const openai = require('openai'); // Add this line
+
         const recognition = new webkitSpeechRecognition();
         recognition.lang = 'ru-RU';
+        let recognitionActive = false; // Track the recognition state
 
         recognition.onstart = function() {
             console.log('Listening...');
+            recognitionActive = true;
+        };
+
+        recognition.onend = function() {
+            console.log('Listening ended...');
+            recognitionActive = false;
         };
 
         recognition.onresult = function(event) {
+            if (!recognitionActive) return; // Check if recognition is already active
+
             const query = event.results[0][0].transcript;
 
             if (query.includes('открой браузер')) {
@@ -48,7 +59,9 @@
         };
 
         document.getElementById('start-listening').addEventListener('click', function() {
-            recognition.start();
+            if (!recognitionActive) {
+                recognition.start();
+            }
         });
 
         function speak(text) {
