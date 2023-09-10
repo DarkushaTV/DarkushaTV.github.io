@@ -9,16 +9,10 @@
     <div id="response"></div>
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/speech-recognition/3.0.0/speech-recognition.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SpeechRecognition/3.0.0/speech-recognition.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/openai/dist/openai.min.js"></script>
     
     <script>
-        const openai = require('openai');
-
-        openai.config({
-            apiKey: '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',
-        });
-
         const recognition = new webkitSpeechRecognition();
         recognition.lang = 'ru-RU';
 
@@ -30,10 +24,15 @@
             const query = event.results[0][0].transcript;
 
             if (query.includes('открой браузер')) {
-                // Code to open a browser
+                // Implement code to open a browser here
             } else if (query.includes('открой ютуб') || query.includes('открой youtube')) {
-                // Code to open YouTube
+                // Implement code to open YouTube here
             } else {
+                // Handle other queries using OpenAI API
+                openai.config({
+                    apiKey: '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',
+                });
+
                 openai.Completion.create({
                     model: 'gpt-3.5-turbo',
                     messages: [
@@ -53,7 +52,9 @@
         });
 
         function speak(text) {
-            // Code to speak the response
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(text);
+            synth.speak(utterance);
         }
     </script>
 </body>
